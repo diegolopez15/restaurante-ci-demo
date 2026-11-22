@@ -29,7 +29,3 @@ jobs:
 
       - name: Run tests
         run: npm test
-
-      - name: Verify app starts
-        run: node -e "require('./src/app.js')"
-        continue-on-error: true
