@@ -2,34 +2,34 @@ name: CI - Restaurante Demo
 
 on:
   push:
-    branches: [main, master, principal]
+    branches: [principal, main, master]
   pull_request:
-    branches: [main, master, principal]
+    branches: [principal, main, master]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 1. Obtener el código
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: 2. Configurar Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
           cache: 'npm'
 
-      - name: 3. Instalar dependencias
+      - name: Install dependencies
         run: npm install
 
-      - name: 4. Análisis estático (lint)
+      - name: Run linter
         run: npm run lint --if-present
         continue-on-error: true
 
-      - name: 5. Ejecutar pruebas
+      - name: Run tests
         run: npm test
 
-      - name: 6. Verificar que la aplicación arranca
+      - name: Verify app starts
         run: node -e "require('./src/app.js')"
         continue-on-error: true
